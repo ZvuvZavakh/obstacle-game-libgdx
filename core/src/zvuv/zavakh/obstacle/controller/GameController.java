@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
+import zvuv.zavakh.obstacle.common.GameManager;
 import zvuv.zavakh.obstacle.config.DifficultyLevel;
 import zvuv.zavakh.obstacle.config.GameConfig;
 import zvuv.zavakh.obstacle.entity.Background;
@@ -79,6 +80,7 @@ public class GameController {
 
             if (isGameOver()) {
                 logger.debug("GAME OVER!!!");
+                GameManager.getInstance().updateHighscore(score);
             } else {
                 restart();
             }

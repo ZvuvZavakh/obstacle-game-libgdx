@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import zvuv.zavakh.obstacle.App;
 import zvuv.zavakh.obstacle.assets.AssetDescriptors;
 import zvuv.zavakh.obstacle.assets.RegionNames;
+import zvuv.zavakh.obstacle.common.GameManager;
 
 public class HighscoreScreen extends GameScreenBase {
 
@@ -32,7 +33,7 @@ public class HighscoreScreen extends GameScreenBase {
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         Label highscoreText = new Label("HIGHSCORE", labelStyle);
-        Label highscoreLabel = new Label("100", labelStyle);
+        Label highscoreLabel = new Label(GameManager.getInstance().getHighscore(), labelStyle);
 
         ImageButton backButton = createButton(UIAtlas, RegionNames.UI_BACK, RegionNames.UI_BACK_PRESSED);
         backButton.addListener(new ChangeListener() {
