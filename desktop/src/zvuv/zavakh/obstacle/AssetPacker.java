@@ -5,7 +5,9 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 public class AssetPacker {
 
     private static final boolean DRAW_DEBUG_OUTLINE = false;
-    private static final String ASSETS_PATH = "assets/sprites";
+    private static final String RAW_FILES_PATH = "assets/ui-raw/ui";
+    private static final String DEST_FILES_PATH = "assets/ui";
+    private static final String PACK_FILE_NAME = "ui";
 
     public static void main(String[] args) {
         TexturePacker.Settings settings = new TexturePacker.Settings();
@@ -15,9 +17,9 @@ public class AssetPacker {
 
         TexturePacker.process(
                 settings,
-                ASSETS_PATH,
-                ASSETS_PATH,
-                "gameplay"
+                RAW_FILES_PATH,
+                DEST_FILES_PATH,
+                PACK_FILE_NAME
         );
     }
 }

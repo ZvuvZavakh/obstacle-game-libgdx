@@ -49,7 +49,7 @@ public class LoadingScreen extends ScreenAdapter {
     }
 
     private void update(float delta) {
-        waitMillis(400);
+        //waitMillis(400);
         progress = assetManager.getProgress();
 
         if (assetManager.update()) {
@@ -86,6 +86,7 @@ public class LoadingScreen extends ScreenAdapter {
 
         assetManager.load(AssetDescriptors.FONT);
         assetManager.load(AssetDescriptors.ATLAS);
+        assetManager.load(AssetDescriptors.UI_ATLAS);
     }
 
     @Override
