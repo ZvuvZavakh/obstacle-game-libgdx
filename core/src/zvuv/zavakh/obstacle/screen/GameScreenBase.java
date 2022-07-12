@@ -70,4 +70,10 @@ public abstract class GameScreenBase extends ScreenAdapter {
                 new TextureRegionDrawable(downRegion)
         );
     }
+
+    protected ImageButton createButton(TextureAtlas atlas, String regionName) {
+        TextureRegion upRegion = atlas.findRegion(regionName);
+
+        return new ImageButton(new TextureRegionDrawable(upRegion));
+    }
 }

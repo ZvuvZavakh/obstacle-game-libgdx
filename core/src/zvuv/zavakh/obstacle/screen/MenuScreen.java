@@ -79,5 +79,6 @@ public class MenuScreen extends GameScreenBase {
 
     private void optionsHandler() {
         System.out.println("OPTIONS");
+        app.setScreen(new OptionsScreen(app));
     }
 }
