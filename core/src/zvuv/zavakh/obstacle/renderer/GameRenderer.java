@@ -39,7 +39,11 @@ public class GameRenderer implements Disposable {
     private final TextureRegion obstacleTexture;
     private final TextureRegion backgroundTexture;
 
-    public GameRenderer(GameController gameController, AssetManager assetManager) {
+    public GameRenderer(
+            GameController gameController,
+            AssetManager assetManager,
+            SpriteBatch spriteBatch) {
+
         this.gameController = gameController;
         this.assetManager = assetManager;
 
@@ -52,7 +56,7 @@ public class GameRenderer implements Disposable {
 
         hudCamera = new OrthographicCamera();
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT, hudCamera);
-        spriteBatch = new SpriteBatch();
+        this.spriteBatch = spriteBatch;
         bitmapFont = assetManager.get(AssetDescriptors.FONT);
 
         TextureAtlas atlas = assetManager.get(AssetDescriptors.ATLAS);
@@ -177,7 +181,6 @@ public class GameRenderer implements Disposable {
     @Override
     public void dispose () {
         shapeRenderer.dispose();
-        spriteBatch.dispose();
     }
 
     public void resize(int width, int height) {

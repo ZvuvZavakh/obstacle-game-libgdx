@@ -44,7 +44,7 @@ public class LoadingScreen extends ScreenAdapter {
         shapeRenderer.end();
 
         if (ready) {
-            app.setScreen(new GameScreen(app));
+            app.setScreen(new MenuScreen(app));
         }
     }
 
