@@ -25,7 +25,7 @@ public class GameController {
     private float startPlayerX = GameConfig.WORLD_WIDTH / 2f;
     private float startPlayerY = 1;
     private int lives = GameConfig.LIVES_START;
-    private DifficultyLevel difficultyLevel = DifficultyLevel.EASY;
+    private DifficultyLevel difficultyLevel = GameManager.getInstance().getDifficultyLevel();
 
     private Array<Obstacle> obstacles = new Array<>();
     private Pool<Obstacle> obstaclePool;
@@ -87,7 +87,7 @@ public class GameController {
         }
     }
 
-    private boolean isGameOver() {
+    public boolean isGameOver() {
         return lives <= 0;
     }
 

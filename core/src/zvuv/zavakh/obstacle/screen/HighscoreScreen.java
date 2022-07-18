@@ -21,6 +21,7 @@ public class HighscoreScreen extends GameScreenBase {
         super(app);
     }
 
+    @Override
     protected void initUI() {
         Table table = new Table();
 

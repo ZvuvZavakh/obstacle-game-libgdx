@@ -15,13 +15,22 @@ import com.badlogic.gdx.utils.Align;
 import zvuv.zavakh.obstacle.App;
 import zvuv.zavakh.obstacle.assets.AssetDescriptors;
 import zvuv.zavakh.obstacle.assets.RegionNames;
+import zvuv.zavakh.obstacle.common.GameManager;
+import zvuv.zavakh.obstacle.config.DifficultyLevel;
 import zvuv.zavakh.obstacle.config.GameConfig;
 
 public class OptionsScreen extends GameScreenBase {
     private Image checkMark;
+    private DifficultyLevel difficultyLevel;
 
     public OptionsScreen(App app) {
         super(app);
+    }
+
+    @Override
+    public void show() {
+        difficultyLevel = GameManager.getInstance().getDifficultyLevel();
+        super.show();
     }
 
     @Override
@@ -45,6 +54,7 @@ public class OptionsScreen extends GameScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 checkMark.setY(easyButton.getY() + 25);
+                GameManager.getInstance().updateDifficulty(DifficultyLevel.EASY);
             }
         });
 
@@ -54,6 +64,7 @@ public class OptionsScreen extends GameScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 checkMark.setY(mediumButton.getY() + 25);
+                GameManager.getInstance().updateDifficulty(DifficultyLevel.MEDIUM);
             }
         });
 
@@ -63,12 +74,20 @@ public class OptionsScreen extends GameScreenBase {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 checkMark.setY(hardButton.getY() + 25);
+                GameManager.getInstance().updateDifficulty(DifficultyLevel.HARD);
             }
         });
 
         TextureRegion checkMarkRegion = UIAtlas.findRegion(RegionNames.UI_CHECK_MARK);
         checkMark = new Image(new TextureRegionDrawable(checkMarkRegion));
-        checkMark.setPosition(mediumButton.getX() + 50, mediumButton.getY() + 40, Align.center);
+
+        if (difficultyLevel.isEasy()) {
+            checkMark.setPosition(easyButton.getX() + 50, easyButton.getY() + 40, Align.center);
+        } else if (difficultyLevel.isMedium()) {
+            checkMark.setPosition(mediumButton.getX() + 50, mediumButton.getY() + 40, Align.center);
+        } else if (difficultyLevel.isHard()) {
+            checkMark.setPosition(hardButton.getX() + 50, hardButton.getY() + 40, Align.center);
+        }
 
         ImageButton backButton = createButton(UIAtlas, RegionNames.UI_BACK, RegionNames.UI_BACK_PRESSED);
         backButton.setPosition(GameConfig.HUD_WIDTH / 2, GameConfig.HUD_HEIGHT / 2 - 180, Align.center);

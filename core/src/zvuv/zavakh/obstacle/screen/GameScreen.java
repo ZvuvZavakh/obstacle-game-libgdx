@@ -29,6 +29,10 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         gameController.update(delta);
         gameRenderer.render(delta);
+
+        if (gameController.isGameOver()) {
+            app.setScreen(new MenuScreen(app));
+        }
     }
 
     @Override
