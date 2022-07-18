@@ -1,10 +1,13 @@
 package zvuv.zavakh.obstacle.controller;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
+import zvuv.zavakh.obstacle.App;
+import zvuv.zavakh.obstacle.assets.AssetDescriptors;
 import zvuv.zavakh.obstacle.common.GameManager;
 import zvuv.zavakh.obstacle.config.DifficultyLevel;
 import zvuv.zavakh.obstacle.config.GameConfig;
@@ -21,6 +24,8 @@ public class GameController {
     private int score;
     private int displayScore;
 
+    private final App app;
+
     private Player player;
     private float startPlayerX = GameConfig.WORLD_WIDTH / 2f;
     private float startPlayerY = 1;
@@ -32,8 +37,10 @@ public class GameController {
     private float obstacleTimer;
 
     private Background background;
+    private Sound hitSound;
 
-    public GameController() {
+    public GameController(App app) {
+        this.app = app;
         player = new Player();
         player.setPosition(startPlayerX, startPlayerY);
 
@@ -42,6 +49,8 @@ public class GameController {
         background = new Background();
         background.setPosition(0f, 0f);
         background.setSize(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
+
+        hitSound = app.getAssetManager().get(AssetDescriptors.SOUND_HIT);
     }
 
     public Player getPlayer() {
@@ -101,6 +110,7 @@ public class GameController {
     private boolean isPlayerCollidedWithObstacle() {
         for (Obstacle obstacle : obstacles) {
             if (obstacle.isNotTouchingPlayer() && obstacle.isCollidingWithPlayer(player)) {
+                hitSound.play();
                 return true;
             }
         }

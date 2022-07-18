@@ -1,27 +1,24 @@
 package zvuv.zavakh.obstacle.screen;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import zvuv.zavakh.obstacle.App;
 import zvuv.zavakh.obstacle.assets.AssetDescriptors;
 import zvuv.zavakh.obstacle.assets.RegionNames;
 import zvuv.zavakh.obstacle.common.GameManager;
 import zvuv.zavakh.obstacle.config.DifficultyLevel;
-import zvuv.zavakh.obstacle.config.GameConfig;
 
 public class OptionsScreen extends GameScreenBase {
-    private Image checkMark;
+
     private DifficultyLevel difficultyLevel;
+    private ButtonGroup<CheckBox> checkboxGroup;
+    private CheckBox easy;
+    private CheckBox medium;
+    private CheckBox hard;
 
     public OptionsScreen(App app) {
         super(app);
@@ -36,83 +33,83 @@ public class OptionsScreen extends GameScreenBase {
     @Override
     protected void initUI() {
         Table table = new Table();
+        table.defaults().pad(15);
 
         TextureAtlas gameplayAtlas = assetManager.get(AssetDescriptors.ATLAS);
-        TextureAtlas UIAtlas = assetManager.get(AssetDescriptors.UI_ATLAS);
-        BitmapFont font = assetManager.get(AssetDescriptors.FONT);
-
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        Label label = new Label("DIFFICULTY", labelStyle);
-        label.setPosition(GameConfig.HUD_WIDTH / 2, GameConfig.HUD_HEIGHT / 2 + 180, Align.center);
+        Skin uiSkin = assetManager.get(AssetDescriptors.UI_SKIN);
 
         TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.BACKGROUND);
-        Image background = new Image(new TextureRegionDrawable(backgroundRegion));
+        table.setBackground(new TextureRegionDrawable(backgroundRegion));
 
-        final ImageButton easyButton = createButton(UIAtlas, RegionNames.UI_EASY);
-        easyButton.setPosition(GameConfig.HUD_WIDTH / 2, GameConfig.HUD_HEIGHT / 2 + 90, Align.center);
-        easyButton.addListener(new ChangeListener() {
+        Label label = new Label("DIFFICULTY", uiSkin);
+
+        ChangeListener changeListener = new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                checkMark.setY(easyButton.getY() + 25);
-                GameManager.getInstance().updateDifficulty(DifficultyLevel.EASY);
+                changeDifficultyHandler();
             }
-        });
+        };
 
-        final ImageButton mediumButton = createButton(UIAtlas, RegionNames.UI_MEDIUM);
-        mediumButton.setPosition(GameConfig.HUD_WIDTH / 2, GameConfig.HUD_HEIGHT / 2, Align.center);
-        mediumButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                checkMark.setY(mediumButton.getY() + 25);
-                GameManager.getInstance().updateDifficulty(DifficultyLevel.MEDIUM);
-            }
-        });
+        easy = createCheckbox(DifficultyLevel.EASY.name(), uiSkin);
+        easy.addListener(changeListener);
 
-        final ImageButton hardButton = createButton(UIAtlas, RegionNames.UI_HARD);
-        hardButton.setPosition(GameConfig.HUD_WIDTH / 2, GameConfig.HUD_HEIGHT / 2 - 90, Align.center);
-        hardButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                checkMark.setY(hardButton.getY() + 25);
-                GameManager.getInstance().updateDifficulty(DifficultyLevel.HARD);
-            }
-        });
+        medium = createCheckbox(DifficultyLevel.MEDIUM.name(), uiSkin);
+        medium.addListener(changeListener);
 
-        TextureRegion checkMarkRegion = UIAtlas.findRegion(RegionNames.UI_CHECK_MARK);
-        checkMark = new Image(new TextureRegionDrawable(checkMarkRegion));
+        hard = createCheckbox(DifficultyLevel.HARD.name(), uiSkin);
+        hard.addListener(changeListener);
 
-        if (difficultyLevel.isEasy()) {
-            checkMark.setPosition(easyButton.getX() + 50, easyButton.getY() + 40, Align.center);
-        } else if (difficultyLevel.isMedium()) {
-            checkMark.setPosition(mediumButton.getX() + 50, mediumButton.getY() + 40, Align.center);
-        } else if (difficultyLevel.isHard()) {
-            checkMark.setPosition(hardButton.getX() + 50, hardButton.getY() + 40, Align.center);
-        }
+        checkboxGroup = new ButtonGroup<>(easy, medium, hard);
+        checkboxGroup.setChecked(difficultyLevel.name());
 
-        ImageButton backButton = createButton(UIAtlas, RegionNames.UI_BACK, RegionNames.UI_BACK_PRESSED);
-        backButton.setPosition(GameConfig.HUD_WIDTH / 2, GameConfig.HUD_HEIGHT / 2 - 180, Align.center);
+        TextButton backButton = new TextButton("BACK", uiSkin);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                back();
+                backHandler();
             }
         });
 
-        stage.addActor(background);
-        stage.addActor(label);
-        stage.addActor(easyButton);
-        stage.addActor(mediumButton);
-        stage.addActor(hardButton);
-        stage.addActor(checkMark);
-        stage.addActor(backButton);
+        Table contentTable = new Table(uiSkin);
 
-        table.defaults().pad(15);
+        contentTable.defaults().pad(10);
+        contentTable.setBackground(RegionNames.UI_PANEL);
+
+        contentTable.add(label).row();
+        contentTable.add(easy).row();
+        contentTable.add(medium).row();
+        contentTable.add(hard).row();
+        contentTable.add(backButton).row();
+
+        table.add(contentTable);
         table.center();
         table.setFillParent(true);
         table.pack();
+
+        stage.addActor(table);
     }
 
-    private void back() {
+    private void changeDifficultyHandler() {
+        CheckBox checked = checkboxGroup.getChecked();
+
+        if (checked == easy) {
+            GameManager.getInstance().updateDifficulty(DifficultyLevel.EASY);
+        } else if (checked == medium) {
+            GameManager.getInstance().updateDifficulty(DifficultyLevel.MEDIUM);
+        } else if (checked == hard) {
+            GameManager.getInstance().updateDifficulty(DifficultyLevel.HARD);
+        }
+    }
+
+    private void backHandler() {
         app.setScreen(new MenuScreen(app));
+    }
+
+    private CheckBox createCheckbox(String text, Skin skin) {
+        CheckBox checkBox = new CheckBox(text, skin);
+        checkBox.left().pad(10);
+        checkBox.getLabelCell().pad(10);
+
+        return checkBox;
     }
 }

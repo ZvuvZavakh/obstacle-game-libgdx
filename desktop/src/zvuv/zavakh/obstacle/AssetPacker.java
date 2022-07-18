@@ -5,9 +5,9 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 public class AssetPacker {
 
     private static final boolean DRAW_DEBUG_OUTLINE = false;
-    private static final String RAW_FILES_PATH = "assets/sprites-raw";
-    private static final String DEST_FILES_PATH = "assets/sprites";
-    private static final String PACK_FILE_NAME = "gameplay";
+    private static final String RAW_FILES_PATH = "assets/skin-base";
+    private static final String DEST_FILES_PATH = "assets/skins";
+    private static final String PACK_FILE_NAME = "ui-skin";
 
     public static void main(String[] args) {
         TexturePacker.Settings settings = new TexturePacker.Settings();

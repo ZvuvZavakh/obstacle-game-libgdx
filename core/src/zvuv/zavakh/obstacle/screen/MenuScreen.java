@@ -1,10 +1,12 @@
 package zvuv.zavakh.obstacle.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import zvuv.zavakh.obstacle.App;
@@ -21,13 +23,11 @@ public class MenuScreen extends GameScreenBase {
     protected void initUI() {
         Table table = new Table();
 
+        Skin uiSkin = assetManager.get(AssetDescriptors.UI_SKIN);
         TextureAtlas gameplayAtlas = assetManager.get(AssetDescriptors.ATLAS);
-        TextureAtlas UIAtlas = assetManager.get(AssetDescriptors.UI_ATLAS);
-
         TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.BACKGROUND);
-        TextureRegion panelRegion = UIAtlas.findRegion(RegionNames.UI_PANEL);
 
-        ImageButton playButton = createButton(UIAtlas, RegionNames.UI_PLAY, RegionNames.UI_PLAY_PRESSED);
+        TextButton playButton = new TextButton("START", uiSkin);
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -35,7 +35,7 @@ public class MenuScreen extends GameScreenBase {
             }
         });
 
-        ImageButton highscoreButton = createButton(UIAtlas, RegionNames.UI_HIGHSCORE, RegionNames.UI_HIGHSCORE_PRESSED);
+        TextButton highscoreButton = new TextButton("HIGHSCORE", uiSkin);
         highscoreButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -43,7 +43,7 @@ public class MenuScreen extends GameScreenBase {
             }
         });
 
-        ImageButton optionsButton = createButton(UIAtlas, RegionNames.UI_OPTIONS, RegionNames.UI_OPTIONS_PRESSED);
+        TextButton optionsButton = new TextButton("OPTIONS", uiSkin);
         optionsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -51,12 +51,21 @@ public class MenuScreen extends GameScreenBase {
             }
         });
 
-        Table buttonsTable = new Table();
+        TextButton quitButton = new TextButton("QUIT", uiSkin);
+        quitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                quitHandler();
+            }
+        });
+
+        Table buttonsTable = new Table(uiSkin);
         buttonsTable.defaults().pad(20);
-        buttonsTable.setBackground(new TextureRegionDrawable(panelRegion));
+        buttonsTable.setBackground(RegionNames.UI_PANEL);
         buttonsTable.add(playButton).row();
         buttonsTable.add(highscoreButton).row();
         buttonsTable.add(optionsButton).row();
+        buttonsTable.add(quitButton).row();
         buttonsTable.center();
 
         table.add(buttonsTable);
@@ -68,18 +77,19 @@ public class MenuScreen extends GameScreenBase {
         stage.addActor(table);
     }
 
+    private void quitHandler() {
+        Gdx.app.exit();
+    }
+
     private void playHandler() {
-        System.out.println("PLAY");
         app.setScreen(new GameScreen(app));
     }
 
     private void highScoreHandler() {
-        System.out.println("HIGHSCORE");
         app.setScreen(new HighscoreScreen(app));
     }
 
     private void optionsHandler() {
-        System.out.println("OPTIONS");
         app.setScreen(new OptionsScreen(app));
     }
 }

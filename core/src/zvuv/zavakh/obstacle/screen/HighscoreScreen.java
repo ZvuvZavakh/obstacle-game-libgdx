@@ -1,13 +1,9 @@
 package zvuv.zavakh.obstacle.screen;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import zvuv.zavakh.obstacle.App;
@@ -25,18 +21,15 @@ public class HighscoreScreen extends GameScreenBase {
     protected void initUI() {
         Table table = new Table();
 
+        Skin uiSkin = assetManager.get(AssetDescriptors.UI_SKIN);
         TextureAtlas gameplayAtlas = assetManager.get(AssetDescriptors.ATLAS);
-        TextureAtlas UIAtlas = assetManager.get(AssetDescriptors.UI_ATLAS);
-        BitmapFont font = assetManager.get(AssetDescriptors.FONT);
 
         TextureRegion backgroundRegion = gameplayAtlas.findRegion(RegionNames.BACKGROUND);
-        TextureRegion panelRegion = UIAtlas.findRegion(RegionNames.UI_PANEL);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        Label highscoreText = new Label("HIGHSCORE", labelStyle);
-        Label highscoreLabel = new Label(GameManager.getInstance().getHighscore(), labelStyle);
+        Label highscoreText = new Label("HIGHSCORE", uiSkin);
+        Label highscoreLabel = new Label(GameManager.getInstance().getHighscore(), uiSkin);
 
-        ImageButton backButton = createButton(UIAtlas, RegionNames.UI_BACK, RegionNames.UI_BACK_PRESSED);
+        TextButton backButton = new TextButton("BACK", uiSkin);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -44,9 +37,9 @@ public class HighscoreScreen extends GameScreenBase {
             }
         });
 
-        Table contentTable = new Table();
+        Table contentTable = new Table(uiSkin);
         contentTable.defaults().pad(20f);
-        contentTable.setBackground(new TextureRegionDrawable(panelRegion));
+        contentTable.setBackground(RegionNames.UI_PANEL);
         contentTable.add(highscoreText).row();
         contentTable.add(highscoreLabel).row();
         contentTable.add(backButton).row();
@@ -62,7 +55,6 @@ public class HighscoreScreen extends GameScreenBase {
     }
 
     private void back() {
-        System.out.println("BACK");
         app.setScreen(new MenuScreen(app));
     }
 }

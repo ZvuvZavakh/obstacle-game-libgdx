@@ -86,7 +86,8 @@ public class LoadingScreen extends ScreenAdapter {
 
         assetManager.load(AssetDescriptors.FONT);
         assetManager.load(AssetDescriptors.ATLAS);
-        assetManager.load(AssetDescriptors.UI_ATLAS);
+        assetManager.load(AssetDescriptors.UI_SKIN);
+        assetManager.load(AssetDescriptors.SOUND_HIT);
     }
 
     @Override
