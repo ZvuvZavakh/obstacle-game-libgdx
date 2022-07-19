@@ -18,6 +18,7 @@ import zvuv.zavakh.obstacle.util.GdxUtils;
 import zvuv.zavakh.obstacle.util.ViewportUtils;
 import zvuv.zavakh.obstacle.util.debug.DebugCameraController;
 
+@Deprecated
 public class GameRenderer implements Disposable {
 
     private final GameController gameController;

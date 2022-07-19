@@ -14,11 +14,12 @@ import zvuv.zavakh.obstacle.config.GameConfig;
 import zvuv.zavakh.obstacle.entity.Background;
 import zvuv.zavakh.obstacle.entity.Obstacle;
 import zvuv.zavakh.obstacle.entity.Player;
-import zvuv.zavakh.obstacle.screen.GameScreen;
+import zvuv.zavakh.obstacle.screen.GameScreenOld;
 
+@Deprecated
 public class GameController {
 
-    private static final Logger logger = new Logger(GameScreen.class.getName(), Logger.DEBUG);
+    private static final Logger logger = new Logger(GameScreenOld.class.getName(), Logger.DEBUG);
 
     private float scoreTimer;
     private int score;
