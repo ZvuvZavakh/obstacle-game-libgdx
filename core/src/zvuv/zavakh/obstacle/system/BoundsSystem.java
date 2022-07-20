@@ -23,6 +23,6 @@ public class BoundsSystem extends IteratingSystem {
         BoundsComponent boundsComponent = Mappers.BOUNDS_MAPPER.get(entity);
         PositionComponent positionComponent = Mappers.POSITION_MAPPER.get(entity);
 
-        boundsComponent.setPositon(positionComponent.getX(), positionComponent.getY());
+        boundsComponent.setPosition(positionComponent.getX(), positionComponent.getY());
     }
 }

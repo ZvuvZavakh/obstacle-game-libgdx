@@ -11,7 +11,7 @@ public class BoundsComponent implements Component {
         return bounds;
     }
 
-    public void setPositon(float x, float y) {
+    public void setPosition(float x, float y) {
         bounds.x = x;
         bounds.y = y;
     }
