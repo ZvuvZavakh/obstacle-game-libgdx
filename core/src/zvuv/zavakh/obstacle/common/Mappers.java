@@ -1,10 +1,7 @@
 package zvuv.zavakh.obstacle.common;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import zvuv.zavakh.obstacle.component.BoundsComponent;
-import zvuv.zavakh.obstacle.component.MovementComponent;
-import zvuv.zavakh.obstacle.component.PositionComponent;
-import zvuv.zavakh.obstacle.component.WorldWrapComponent;
+import zvuv.zavakh.obstacle.component.*;
 
 public class Mappers {
 
@@ -17,8 +14,14 @@ public class Mappers {
     public static final ComponentMapper<PositionComponent> POSITION_MAPPER =
             ComponentMapper.getFor(PositionComponent.class);
 
-    public static final ComponentMapper<WorldWrapComponent> WORLD_WRAP_MAPPER =
-            ComponentMapper.getFor(WorldWrapComponent.class);
+    public static final ComponentMapper<ObstacleComponent> OBSTACLE_MAPPER =
+            ComponentMapper.getFor(ObstacleComponent.class);
+
+    public static final ComponentMapper<TextureComponent> TEXTURE_MAPPER =
+            ComponentMapper.getFor(TextureComponent.class);
+
+    public static final ComponentMapper<DimensionComponent> DIMENSION_MAPPER =
+            ComponentMapper.getFor(DimensionComponent.class);
 
     private Mappers() {}
 }

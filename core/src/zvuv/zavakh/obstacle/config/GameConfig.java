@@ -18,7 +18,7 @@ public class GameConfig {
 
     public static final float OBSTACLE_SPAWN_TIME = 0.25f;
     public static final float OBSTACLE_BOUNDS_RADIUS = 0.3f;
-    public static final float SIZE = 2 * OBSTACLE_BOUNDS_RADIUS;
+    public static final float OBSTACLE_SIZE = 2 * OBSTACLE_BOUNDS_RADIUS;
 
     public static final float MAX_PLAYER_X_SPEED = 0.25f;
     public static final int LIVES_START = 3;
@@ -29,4 +29,6 @@ public class GameConfig {
     public static final float EASY_OBSTACLE_SPEED = 0.1f;
     public static final float MEDIUM_OBSTACLE_SPEED = 0.15f;
     public static final float HARD_OBSTACLE_SPEED = 0.2f;
+
+    public static boolean DISPLAY_DEBUG = false;
 }

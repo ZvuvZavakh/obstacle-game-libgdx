@@ -3,10 +3,14 @@ package zvuv.zavakh.obstacle.common;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import zvuv.zavakh.obstacle.config.DifficultyLevel;
+import zvuv.zavakh.obstacle.config.GameConfig;
 
 public class GameManager {
 
     private static final GameManager INSTANCE = new GameManager();
+
+    private int lives = GameConfig.LIVES_START;
+    private int score;
 
     private final Preferences preferences;
 
@@ -36,10 +40,9 @@ public class GameManager {
         return difficultyLevel;
     }
 
-    public void updateHighscore(int highscore) {
-        if (highscore > this.highscore) {
-            this.highscore = highscore;
-            preferences.putInteger(HIGHSCORE_KEY, highscore);
+    public void updateHighscore() {
+        if (score > highscore) {
+            preferences.putInteger(HIGHSCORE_KEY, score);
             preferences.flush();
         }
     }
@@ -50,5 +53,30 @@ public class GameManager {
             preferences.putString(DIFFICULTY_KEY, difficulty.name());
             preferences.flush();
         }
+    }
+
+    public void reset() {
+        lives = GameConfig.LIVES_START;
+        score = 0;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void decrementLives() {
+        lives--;
+    }
+
+    public boolean isGameOver() {
+        return lives <= 0;
+    }
+
+    public void updateScore(int amount) {
+        score += amount;
     }
 }

@@ -1,8 +1,9 @@
 package zvuv.zavakh.obstacle.component;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.utils.Pool;
 
-public class MovementComponent implements Component {
+public class MovementComponent implements Component, Pool.Poolable {
 
     private float xSpeed;
     private float ySpeed;
@@ -21,5 +22,11 @@ public class MovementComponent implements Component {
 
     public void setySpeed(float ySpeed) {
         this.ySpeed = ySpeed;
+    }
+
+    @Override
+    public void reset() {
+        xSpeed = 0f;
+        ySpeed = 0f;
     }
 }
