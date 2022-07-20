@@ -17,6 +17,8 @@ public class GameConfig {
     public static final float HUD_HEIGHT = 800f;
 
     public static final float OBSTACLE_SPAWN_TIME = 0.25f;
+    public static final float OBSTACLE_BOUNDS_RADIUS = 0.3f;
+    public static final float SIZE = 2 * OBSTACLE_BOUNDS_RADIUS;
 
     public static final float MAX_PLAYER_X_SPEED = 0.25f;
     public static final int LIVES_START = 3;

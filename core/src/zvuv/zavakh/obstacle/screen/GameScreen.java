@@ -10,9 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import zvuv.zavakh.obstacle.App;
 import zvuv.zavakh.obstacle.common.EntityFactory;
 import zvuv.zavakh.obstacle.config.GameConfig;
-import zvuv.zavakh.obstacle.system.BoundsSystem;
-import zvuv.zavakh.obstacle.system.MovementSystem;
-import zvuv.zavakh.obstacle.system.PlayerSystem;
+import zvuv.zavakh.obstacle.system.*;
 import zvuv.zavakh.obstacle.system.debug.DebugCameraSystem;
 import zvuv.zavakh.obstacle.system.debug.DebugRenderSystem;
 import zvuv.zavakh.obstacle.system.debug.GridRenderSystem;
@@ -47,7 +45,9 @@ public class GameScreen implements Screen {
         pooledEngine.addSystem(new DebugCameraSystem(camera, GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y));
         pooledEngine.addSystem(new DebugRenderSystem(viewport, shapeRenderer));
         pooledEngine.addSystem(new PlayerSystem());
+        pooledEngine.addSystem(new ObstacleSpawnSystem(entityFactory));
         pooledEngine.addSystem(new MovementSystem());
+        pooledEngine.addSystem(new WorldWrapSystem());
         pooledEngine.addSystem(new BoundsSystem());
 
         entityFactory.getPlayer();
