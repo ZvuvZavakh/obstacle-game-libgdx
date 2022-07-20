@@ -7,18 +7,18 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Intersector;
 import zvuv.zavakh.obstacle.common.Mappers;
 import zvuv.zavakh.obstacle.component.BoundsComponent;
-import zvuv.zavakh.obstacle.component.LiveComponent;
+import zvuv.zavakh.obstacle.component.CollidableBase;
+import zvuv.zavakh.obstacle.component.ObstacleComponent;
 import zvuv.zavakh.obstacle.component.PlayerComponent;
 
-public class LiveCollisionSystem extends PlayerCollisionSystemBase<LiveComponent> {
+public class ObstacleCollisionSystem extends PlayerCollisionSystemBase<ObstacleComponent> {
 
-    public LiveCollisionSystem(CollisionListener collisionListener) {
-        super(collisionListener, LiveComponent.class);
+    public ObstacleCollisionSystem(CollisionListener collisionListener) {
+        super(collisionListener, ObstacleComponent.class);
     }
 
     @Override
     protected void processEntity(Entity entity) {
-        collisionListener.catchLive();
-        getEngine().removeEntity(entity);
+        collisionListener.hitObstacle();
     }
 }

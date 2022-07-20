@@ -16,7 +16,7 @@ import zvuv.zavakh.obstacle.common.GameManager;
 import zvuv.zavakh.obstacle.config.GameConfig;
 import zvuv.zavakh.obstacle.system.*;
 import zvuv.zavakh.obstacle.system.collision.CollisionListener;
-import zvuv.zavakh.obstacle.system.collision.CollisionSystem;
+import zvuv.zavakh.obstacle.system.collision.ObstacleCollisionSystem;
 import zvuv.zavakh.obstacle.system.collision.LiveCollisionSystem;
 import zvuv.zavakh.obstacle.system.debug.DebugCameraSystem;
 import zvuv.zavakh.obstacle.system.debug.DebugRenderSystem;
@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
         pooledEngine.addSystem(new CleanupSystem());
         pooledEngine.addSystem(new WorldWrapSystem());
         pooledEngine.addSystem(new BoundsSystem());
-        pooledEngine.addSystem(new CollisionSystem(collisionListener));
+        pooledEngine.addSystem(new ObstacleCollisionSystem(collisionListener));
         pooledEngine.addSystem(new LiveCollisionSystem(collisionListener));
         pooledEngine.addSystem(new ScoreSystem());
 
