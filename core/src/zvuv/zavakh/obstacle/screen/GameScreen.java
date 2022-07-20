@@ -17,6 +17,7 @@ import zvuv.zavakh.obstacle.config.GameConfig;
 import zvuv.zavakh.obstacle.system.*;
 import zvuv.zavakh.obstacle.system.collision.CollisionListener;
 import zvuv.zavakh.obstacle.system.collision.CollisionSystem;
+import zvuv.zavakh.obstacle.system.collision.LiveCollisionSystem;
 import zvuv.zavakh.obstacle.system.debug.DebugCameraSystem;
 import zvuv.zavakh.obstacle.system.debug.DebugRenderSystem;
 import zvuv.zavakh.obstacle.system.debug.GridRenderSystem;
@@ -68,16 +69,24 @@ public class GameScreen implements Screen {
                     reset = true;
                 }
             }
+
+            @Override
+            public void catchLive() {
+                hitSound.play();
+                GameManager.getInstance().addLive();
+            }
         };
 
         pooledEngine.addSystem(new DebugCameraSystem(camera, GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y));
         pooledEngine.addSystem(new PlayerSystem());
         pooledEngine.addSystem(new ObstacleSpawnSystem(entityFactory));
+        pooledEngine.addSystem(new LiveSpawnSystem(entityFactory));
         pooledEngine.addSystem(new MovementSystem());
         pooledEngine.addSystem(new CleanupSystem());
         pooledEngine.addSystem(new WorldWrapSystem());
         pooledEngine.addSystem(new BoundsSystem());
         pooledEngine.addSystem(new CollisionSystem(collisionListener));
+        pooledEngine.addSystem(new LiveCollisionSystem(collisionListener));
         pooledEngine.addSystem(new ScoreSystem());
 
         pooledEngine.addSystem(new RenderSystem(viewport, app.getSpriteBatch()));

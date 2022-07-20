@@ -23,5 +23,8 @@ public class Mappers {
     public static final ComponentMapper<DimensionComponent> DIMENSION_MAPPER =
             ComponentMapper.getFor(DimensionComponent.class);
 
+    public static final ComponentMapper<LiveComponent> LIVE_MAPPER =
+            ComponentMapper.getFor(LiveComponent.class);
+
     private Mappers() {}
 }

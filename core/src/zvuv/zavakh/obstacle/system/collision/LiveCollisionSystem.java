@@ -7,52 +7,53 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Intersector;
 import zvuv.zavakh.obstacle.common.Mappers;
 import zvuv.zavakh.obstacle.component.BoundsComponent;
-import zvuv.zavakh.obstacle.component.ObstacleComponent;
+import zvuv.zavakh.obstacle.component.LiveComponent;
 import zvuv.zavakh.obstacle.component.PlayerComponent;
 
-public class CollisionSystem extends EntitySystem {
+public class LiveCollisionSystem extends EntitySystem {
 
     private static final Family playerFamily = Family.all(
             PlayerComponent.class,
             BoundsComponent.class
     ).get();
 
-    private static final Family obstacleFamily = Family.all(
-            ObstacleComponent.class,
+    private static final Family liveFamily = Family.all(
+            LiveComponent.class,
             BoundsComponent.class
     ).get();
 
     private final CollisionListener collisionListener;
 
-    public CollisionSystem(CollisionListener collisionListener) {
+    public LiveCollisionSystem(CollisionListener collisionListener) {
         this.collisionListener = collisionListener;
     }
 
     @Override
     public void update(float deltaTime) {
         ImmutableArray<Entity> players = getEngine().getEntitiesFor(playerFamily);
-        ImmutableArray<Entity> obstacles = getEngine().getEntitiesFor(obstacleFamily);
+        ImmutableArray<Entity> lives = getEngine().getEntitiesFor(liveFamily);
 
         for (Entity player : players) {
-            for (Entity obstacle : obstacles) {
-                ObstacleComponent obstacleComponent = Mappers.OBSTACLE_MAPPER.get(obstacle);
+            for (Entity live : lives) {
+                LiveComponent liveComponent = Mappers.LIVE_MAPPER.get(live);
 
-                if (obstacleComponent.isHit()) {
+                if (liveComponent.isCatched()) {
                     continue;
                 }
 
-                if (checkCollision(player, obstacle)) {
-                    obstacleComponent.setHit(true);
-                    collisionListener.hitObstacle();
+                if (checkCollision(player, live)) {
+                    liveComponent.setCatched(true);
+                    collisionListener.catchLive();
+                    getEngine().removeEntity(live);
                 }
             }
         }
     }
 
-    private boolean checkCollision(Entity player, Entity obstacle) {
+    private boolean checkCollision(Entity player, Entity live) {
         BoundsComponent playerBounds = Mappers.BOUNDS_MAPPER.get(player);
-        BoundsComponent obstacleBounds = Mappers.BOUNDS_MAPPER.get(obstacle);
+        BoundsComponent liveBounds = Mappers.BOUNDS_MAPPER.get(live);
 
-        return Intersector.overlaps(playerBounds.getBounds(), obstacleBounds.getBounds());
+        return Intersector.overlaps(playerBounds.getBounds(), liveBounds.getBounds());
     }
 }

@@ -47,6 +47,10 @@ public class GameManager {
         }
     }
 
+    public void addLive() {
+        lives++;
+    }
+
     public void updateDifficulty(DifficultyLevel difficulty) {
         if (difficultyLevel != difficulty) {
             this.difficultyLevel = difficulty;

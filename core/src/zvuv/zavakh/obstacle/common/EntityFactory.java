@@ -87,6 +87,38 @@ public class EntityFactory {
         pooledEngine.addEntity(obstacle);
     }
 
+    public void getLive(float x, float y) {
+        BoundsComponent boundsComponent = pooledEngine.createComponent(BoundsComponent.class);
+        boundsComponent.getBounds().set(x, y, GameConfig.LIVE_BOUNDS_RADIUS);
+
+        MovementComponent movementComponent = pooledEngine.createComponent(MovementComponent.class);
+        movementComponent.setySpeed(-GameConfig.LIVE_SPEED);
+
+        LiveComponent liveComponent = pooledEngine.createComponent(LiveComponent.class);
+        CleanupComponent cleanupComponent = pooledEngine.createComponent(CleanupComponent.class);
+
+        PositionComponent positionComponent = pooledEngine.createComponent(PositionComponent.class);
+        positionComponent.setPosition(x, y);
+
+        TextureComponent textureComponent = pooledEngine.createComponent(TextureComponent.class);
+        textureComponent.setTextureRegion(textureAtlas.findRegion(RegionNames.PLAYER));
+
+        DimensionComponent dimensionComponent = pooledEngine.createComponent(DimensionComponent.class);
+        dimensionComponent.setDimensions(GameConfig.PLAYER_SIZE, GameConfig.PLAYER_SIZE);
+
+        Entity live = pooledEngine.createEntity();
+
+        live.add(boundsComponent);
+        live.add(movementComponent);
+        live.add(liveComponent);
+        live.add(cleanupComponent);
+        live.add(positionComponent);
+        live.add(textureComponent);
+        live.add(dimensionComponent);
+
+        pooledEngine.addEntity(live);
+    }
+
     public void getBackground() {
         PositionComponent positionComponent = pooledEngine.createComponent(PositionComponent.class);
         positionComponent.setPosition(GameConfig.WORLD_WIDTH / 2, GameConfig.WORLD_HEIGHT / 2);
